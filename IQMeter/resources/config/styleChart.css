@@ -1,0 +1,80 @@
+
+.chart {
+    -fx-padding: 0px;
+    -fx-background-color: rgb(242,241,240);
+ /*-fx-background-image: url("icon.png");*/   
+ 
+}
+.chart-content {
+    -fx-padding: 10px;
+}
+ 
+/*.chart-title {
+  -fx-text-fill: #4682b4;
+  -fx-font-size: 1.6em;
+}*/
+ 
+.axis-label {
+  -fx-text-fill: #4682b4;
+  -fx-padding: 15px;
+}
+ 
+.chart-legend {
+   -fx-background-color:  transparent;
+   -fx-padding: 10px;
+}
+
+/*.default-color0.chart-series-line { -fx-stroke: #e9967a; }
+.default-color1.chart-series-line { -fx-stroke: #f0e68c; }
+.default-color2.chart-series-line { -fx-stroke: #dda0dd; }
+ 
+.default-color0.chart-line-symbol { -fx-background-color: #e9967a, white; }
+.default-color1.chart-line-symbol { -fx-background-color: #f0e68c, white; }
+.default-color2.chart-line-symbol { -fx-background-color: #dda0dd, white; }*/
+.series-Spicy.chart-series-line{
+     -fx-stroke: #000000;
+}
+ 
+/*.chart-legend-item-symbol{
+   -fx-background-radius: 0;
+}*/
+ 
+/*.chart-legend-item{
+    -fx-text-fill: #191970;
+}*/
+
+.chart-plot-background {
+    -fx-background-color: transparent;
+}
+.chart-vertical-grid-lines {
+    -fx-stroke: transparent;
+}
+/*.chart-horizontal-grid-lines {
+    -fx-stroke: black;
+}*/
+.chart-alternative-row-fill {
+    -fx-fill: transparent;
+    -fx-stroke: transparent;
+    -fx-stroke-width: 0;
+}
+
+.default-colorSpicy.chart-series-line { -fx-stroke: #cd0e00; }
+.default-colorCloverETL.chart-series-line { -fx-stroke: #9aca00; }
+.default-colorAltova_MapForce.chart-series-line { -fx-stroke: #f3ae00; }
+
+.default-colorSpicy.chart-line-symbol { -fx-background-color: #cd0e00, white; }
+.default-colorCloverETL.chart-line-symbol { -fx-background-color: #9aca00, white; }
+.default-colorAltova_MapForce.chart-line-symbol { -fx-background-color: #f3ae00, white; }
+
+
+.default-colorSpicy.chart-series-area-line { -fx-stroke: #cd0e00; }
+.default-colorCloverETL.chart-series-area-line { -fx-stroke: #9aca00; }
+.default-colorAltova_MapForce.chart-series-area-line { -fx-stroke: #f3ae00; }
+
+.default-colorSpicy.chart-series-area-fill { -fx-fill: #cd0e0055; }
+.default-colorCloverETL.chart-series-area-fill { -fx-fill: #9aca0055; }
+.default-colorAltova_MapForce.chart-series-area-fill { -fx-fill: #f3ae0055; }
+
+.default-colorSpicy.chart-area-symbol { -fx-background-color: #cd0e00, white; }
+.default-colorCloverETL.chart-area-symbol { -fx-background-color: #9aca00, white; }
+.default-colorAltova_MapForce.chart-area-symbol { -fx-background-color: #f3ae00, white; }

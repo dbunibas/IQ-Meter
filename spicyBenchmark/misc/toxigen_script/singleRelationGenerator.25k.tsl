@@ -1,0 +1,103 @@
+<?xml version='1.0' encoding='ISO-8859-1' ?>
+<!DOCTYPE tox-template
+  SYSTEM 'http://www.cs.toronto.edu/tox/toxgene/ToXgene2.dtd'>
+<tox-template>
+	<!-- Base types *********************************************************** -->
+    <tox-distribution name="c1" type="constant" minInclusive="1" maxInclusive="1"/>
+	<simpleType name="person_pid">
+		<restriction base="positiveInteger">
+			<tox-number sequential="yes" tox-distribution="c1" minInclusive="1"/>
+		</restriction>
+	</simpleType>
+	<simpleType name="person_tname">
+		<restriction base="string">
+			<tox-string maxLength="10" minLength="5" type="text"/>
+		</restriction>
+	</simpleType>
+	<simpleType name="person_resource">
+		<restriction base="string">
+			<tox-string maxLength="10" minLength="5" type="text"/>
+		</restriction>
+	</simpleType>
+	<simpleType name="person_a">
+		<restriction base="string">
+			<tox-string maxLength="10" minLength="5" type="text"/>
+		</restriction>
+	</simpleType>
+	<simpleType name="person_b">
+		<restriction base="string">
+			<tox-string maxLength="10" minLength="5" type="text"/>
+		</restriction>
+	</simpleType>
+	<simpleType name="person_c">
+		<restriction base="string">
+			<tox-string maxLength="10" minLength="5" type="text"/>
+		</restriction>
+	</simpleType>
+	<simpleType name="person_d">
+		<restriction base="string">
+			<tox-string maxLength="10" minLength="5" type="text"/>
+		</restriction>
+	</simpleType>
+	<simpleType name="person_e">
+		<restriction base="string">
+			<tox-string maxLength="10" minLength="5" type="text"/>
+		</restriction>
+	</simpleType>
+	<!-- Lists **************************************************************** -->
+	<tox-list name="person_list" unique="person/pid">
+		<element maxOccurs="50000" minOccurs="50000" name="person">
+			<complexType>
+				<element name="pid" type="person_pid"/>
+				<element name="tname" type="person_tname"/>
+				<element name="resource" type="person_resource"/>
+				<element name="aattribute" type="person_a"/>
+				<element name="battribute" type="person_b"/>
+				<element name="cattribute" type="person_c"/>
+				<element name="dattribute" type="person_d"/>
+				<element name="eattribute" type="person_e"/>
+			</complexType>
+		</element>
+	</tox-list>
+	<!-- Main document ****************************************** -->
+	<tox-document name="singleRelation-source-instance-25k">
+		<element maxOccurs="1" minOccurs="1" name="e1">
+			<complexType>
+				<element maxOccurs="1" minOccurs="1" name="Persons">
+					<complexType>
+						<element maxOccurs="25000" minOccurs="25000" name="Person">
+							<complexType>
+								<tox-sample duplicates="no" path="[person_list/person]">
+									<element name="pid">
+										<tox-expr value="[pid]"/>
+									</element>
+									<element name="tname">
+										<tox-expr value="[tname]"/>
+									</element>
+									<element name="resource">
+										<tox-expr value="[resource]"/>
+									</element>
+									<element name="aattribute">
+										<tox-expr value="[aattribute]"/>
+									</element>
+									<element name="battribute">
+										<tox-expr value="[battribute]"/>
+									</element>
+									<element name="cattribute">
+										<tox-expr value="[cattribute]"/>
+									</element>
+									<element name="dattribute">
+										<tox-expr value="[dattribute]"/>
+									</element>
+									<element name="eattribute">
+										<tox-expr value="[eattribute]"/>
+									</element>
+								</tox-sample>
+							</complexType>
+						</element>
+					</complexType>
+				</element>
+			</complexType>
+		</element>
+	</tox-document>
+</tox-template>

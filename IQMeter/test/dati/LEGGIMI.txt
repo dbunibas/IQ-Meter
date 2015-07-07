@@ -1,0 +1,4 @@
+questo file e' incluso nello zip solo per fare in modo 
+che nello zip sia conservata la struttura delle cartelle
+
+e' possibile eliminarlo senza problemi

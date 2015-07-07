@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<xs:schema elementFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+    <xs:element name="e1">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element minOccurs="1" name="Persons" nillable="false">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element maxOccurs="unbounded" minOccurs="1" name="Person" nillable="false">
+                                <xs:complexType>
+                                    <xs:sequence>
+                                        <xs:element minOccurs="1" name="pid" nillable="true" type="xs:string"/>
+                                        <xs:element minOccurs="1" name="pname" nillable="true" type="xs:string"/>
+                                        <xs:element minOccurs="1" name="Teams" nillable="false">
+                                            <xs:complexType>
+                                                <xs:sequence>
+                                                    <xs:element maxOccurs="unbounded" minOccurs="1" name="Team" nillable="false">
+                                                        <xs:complexType>
+                                                            <xs:sequence>
+                                                                <xs:element minOccurs="1" name="tname" nillable="true" type="xs:string"/>
+                                                                <xs:element minOccurs="1" name="resource" nillable="true" type="xs:string"/>
+                                                            </xs:sequence>
+                                                        </xs:complexType>
+                                                    </xs:element>
+                                                </xs:sequence>
+                                            </xs:complexType>
+                                        </xs:element>
+                                    </xs:sequence>
+                                </xs:complexType>
+                            </xs:element>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element minOccurs="1" name="Resources" nillable="false">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element maxOccurs="unbounded" minOccurs="1" name="Resource" nillable="false">
+                                <xs:complexType>
+                                    <xs:sequence>
+                                        <xs:element minOccurs="1" name="rid" nillable="true" type="xs:string"/>
+                                        <xs:element minOccurs="1" name="rname" nillable="true" type="xs:string"/>
+                                    </xs:sequence>
+                                </xs:complexType>
+                            </xs:element>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+            </xs:sequence>
+        </xs:complexType>
+        <xs:key name="key1">
+            <xs:selector xpath=".//Resource"/>
+            <xs:field xpath="rid"/>
+        </xs:key>
+        <xs:keyref name="keyRef1" refer="key1">
+            <xs:selector xpath=".//Team"/>
+            <xs:field xpath="resource"/>
+        </xs:keyref>
+    </xs:element>
+</xs:schema>

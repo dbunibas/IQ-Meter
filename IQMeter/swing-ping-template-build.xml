@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="swing-ping-template-build">
+     
+ <!-- ***************************************************
+                    Importazione
+      *************************************************** -->
+    
+    <import file="./swing-template-build.xml" />
+    
+ <!-- ***************************************************
+                    Target Ridefiniti
+      *************************************************** -->
+
+    <target name="-init-classpath" depends="-init-folders">
+        <property name="build.sysclasspath" value="ignore" />
+        <path id="compile.classpath">
+            <pathelement location="${build.dir}" />
+            <pathelement location="${lib.dir}/ping-${ping.version}.jar" />
+            <pathelement location="${lib.dir}/formsrt.jar" />
+            <fileset dir="${lib.dir}" includes="commons-logging-*.jar" />
+        </path>
+        <path id="run.classpath">
+            <path refid="compile.classpath" />
+            <fileset dir="${lib.dir}" includes="log4j-*.jar" />
+        </path>
+        <fileset id="run.jar.fileset" dir="${lib.dir}">        
+            <include name="commons-logging-*.jar" />
+            <include name="ping-${ping.version}.jar" />
+            <include name="formsrt.jar" />
+        </fileset>
+        <path id="run.jar.classpath">
+            <fileset refid="run.jar.fileset" />
+        </path>
+        <path id="test.classpath">
+            <path refid="run.classpath" />
+            <pathelement location="${test.build.dir}" />
+            <fileset refid="test.jars" />
+        </path>
+    </target>    
+    
+    <target name="init" depends="-init-folders, -init-classpath, -init-release, -init-debug" description="inizializza le proprieta' e i path">
+        <property name="main.class" value="it.unibas.ping.framework.Applicazione" />
+    </target>    
+    
+    <target name="-init-build-files" depends="init">
+        <fileset id="build.file.templates" dir="..">
+            <include name="swing-template-build.xml" />
+            <include name="swing-ping-template-build.xml" />
+        </fileset>
+    </target>
+
+</project>

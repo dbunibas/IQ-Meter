@@ -1,0 +1,3 @@
+statDB.cityStat.organizations.organization.companyId
+statDB.cityStat.financials.financial.financialId
+statDB.cityStat.organizations.organization.fundings.fund.financialIdRef

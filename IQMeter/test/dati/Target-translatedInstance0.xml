@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<Target xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="Target.xsd">
+  <Protein>
+    <Name>12-alpha-hydroxysteroid dehydrogenase</Name>
+    <Accession>P21215</Accession>
+    <Created>1991-08-01</Created>
+  </Protein>
+  <Protein>
+    <Name>14-3-3 protein homolog 2</Name>
+    <Accession>Q8MM75</Accession>
+    <Created>2003-03-25</Created>
+  </Protein>
+  <Protein>
+    <Name>14-3-3-like protein A</Name>
+    <Accession>Q96450</Accession>
+    <Created>1998-07-15</Created>
+  </Protein>
+</Target>

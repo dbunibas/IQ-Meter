@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="US-ASCII"?>
+
+<e1>
+	<Persons>
+		<Person>
+			<pid>p1</pid>
+			<pname>John</pname>
+		</Person>
+		<Person>
+			<pid>p2</pid>
+			<pname>Mike</pname>
+		</Person>
+		<Person>
+			<pid>p3</pid>
+			<pname>Tim</pname>
+		</Person>
+	</Persons>
+
+	<Teams>
+		<Team> 
+			<pid>p1</pid>
+			<tname>sk1</tname>
+			<resource>r1</resource>
+		</Team>
+		<Team> 
+			<pid>p1</pid>
+			<tname>sk1</tname>
+			<resource>r2</resource>
+		</Team>
+		<Team> 
+			<pid>p2</pid>
+			<tname>sk1</tname>
+			<resource>r2</resource>
+		</Team>
+	</Teams>
+	<Resources>
+		<Resource>
+			<rid>r1</rid>
+			<rname>pc</rname>
+		</Resource>
+		<Resource>
+			<rid>r2</rid>
+			<rname>laptop</rname>
+		</Resource>
+		<Resource>
+			<rid>r3</rid>
+			<rname>laptop</rname>
+		</Resource>
+	</Resources>
+</e1>			

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<city_Set xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="city_Set.xsd">
+  <city country="cid-cia-Albania" id="cty-cid-cia-Albania-Tirane" latitude="46.2" longitude="10.7" name="Tirane">
+    <population year="87">192000</population>
+  </city>
+  <city country="cid-cia-Greece" id="cty-Greece-Athens" latitude="37.9667" longitude="23.7167" name="Athens" province="prov-cid-cia-Greece-3">
+    <population year="81">885737</population>
+    <located_at water="sea-Mittelmeer" watertype="sea"/>
+  </city>
+  <city country="cid-cia-Macedonia" id="cty-cid-cia-Macedonia-Skopje" name="Skopje"/>
+  <city country="cid-cia-Serbia-and-Montenegro" id="cty-cid-cia-Serbia-and-Montenegro-Belgrade" latitude="44.8" longitude="20.4667" name="Belgrade">
+    <population year="87">1407073</population>
+  </city>
+</city_Set>

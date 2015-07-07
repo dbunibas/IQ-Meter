@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<xs:schema elementFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:element name="city_Set">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element maxOccurs="unbounded" minOccurs="1" name="city" nillable="false">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element maxOccurs="unbounded" minOccurs="0" name="population" nillable="false">
+                <xs:complexType mixed="true">
+                  <xs:sequence/>
+                  <xs:attribute name="year" type="xs:string"/>
+                </xs:complexType>
+              </xs:element>
+              <xs:element maxOccurs="unbounded" minOccurs="0" name="located_at" nillable="false">
+                <xs:complexType>
+                  <xs:sequence/>
+                  <xs:attribute name="watertype" type="xs:string"/>
+                  <xs:attribute name="water" type="xs:string"/>
+                </xs:complexType>
+              </xs:element>
+            </xs:sequence>
+            <xs:attribute name="id" type="xs:string"/>
+            <xs:attribute name="name" type="xs:string"/>
+            <xs:attribute name="country" type="xs:string"/>
+            <xs:attribute name="province" type="xs:string"/>
+            <xs:attribute name="longitude" type="xs:string"/>
+            <xs:attribute name="latitude" type="xs:string"/>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+    <xs:key name="key1">
+      <xs:selector xpath=".//city"/>
+      <xs:field xpath="@id"/>
+    </xs:key>
+  </xs:element>
+</xs:schema>

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="US-ASCII"?>
+<e1>
+	<Persons>
+		<Person>
+			<pid>c1</pid>
+			<tname>c2</tname>
+			<resource>_L1</resource>
+		</Person>
+		<Person>
+			<pid>c3</pid>
+			<tname>c4</tname>
+			<resource>c5</resource>
+		</Person>
+		<Person>
+			<pid>c6</pid>
+			<tname>c2</tname>
+			<resource>_L5</resource>
+		</Person>
+		<Person>
+			<pid>c6</pid>
+			<tname>_L2</tname>
+			<resource>_L5</resource>
+		</Person>
+		<Person>
+			<pid>A</pid>
+			<tname>B</tname>
+			<resource>_L6</resource>
+		</Person>
+		<Person>
+			<pid>D</pid>
+			<tname>E</tname>
+			<resource>_L6</resource>
+		</Person>
+		<Person>
+			<pid>c1</pid>
+			<tname>c1</tname>
+			<resource>c2</resource>
+		</Person>
+	</Persons>
+</e1>

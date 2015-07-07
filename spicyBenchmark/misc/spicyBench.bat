@@ -1,0 +1,1 @@
+java -cp ../lib/spicyBenchmark-0.1.jar;../lib/commons-logging-1.1.jar;../lib/jdom.jar;../lib/xercesImpl.jar;../lib/spicyEngine-1.0.jar;../lib/treedistance.jar;../lib/simpack-0.91-bin.jar;../lib/famix.jar;../lib/jgrapht-0.6.0.jar;../lib/log4j-1.2.14.jar it.unibas.spicybenchmark.Main %1

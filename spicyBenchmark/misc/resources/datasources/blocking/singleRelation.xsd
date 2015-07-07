@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+   <xs:element name="e1">
+      <xs:complexType>
+         <xs:sequence>
+            <xs:element name="Persons" nillable="false" minOccurs="1">
+               <xs:complexType>
+                  <xs:sequence>
+                     <xs:element maxOccurs="unbounded" name="Person" nillable="false" minOccurs="1">
+                        <xs:complexType>
+                           <xs:sequence>
+                              <xs:element name="pid" type="xs:string" nillable="false" minOccurs="1"/>
+                              <xs:element name="tname" type="xs:string" nillable="false" minOccurs="1"/>
+                              <xs:element name="resource" type="xs:string" nillable="false" minOccurs="1"/>
+                              <xs:element name="aattribute" type="xs:string" nillable="false" minOccurs="1"/>
+                              <xs:element name="battribute" type="xs:string" nillable="false" minOccurs="1"/>
+                              <xs:element name="cattribute" type="xs:string" nillable="false" minOccurs="1"/>
+                              <xs:element name="dattribute" type="xs:string" nillable="false" minOccurs="1"/>
+                              <xs:element name="eattribute" type="xs:string" nillable="false" minOccurs="1"/>
+                           </xs:sequence>
+                        </xs:complexType>
+                     </xs:element>
+                  </xs:sequence>
+               </xs:complexType>
+            </xs:element>
+         </xs:sequence>
+      </xs:complexType>
+      <xs:key name="keyPid">
+            <xs:selector xpath=".//Person"/>
+            <xs:field xpath="pid"/>
+        </xs:key>
+   </xs:element>
+</xs:schema>

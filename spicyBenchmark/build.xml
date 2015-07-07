@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="spicyBenchmark" default="build">
+
+ <!-- ***************************************************
+            Importazione del template
+      *************************************************** -->
+    <import file="../spicy-template-build.xml" />
+    <property file="../common.properties" />
+    <target name="-init-classpath" depends="-init-folders">
+        <property name="build.sysclasspath" value="ignore" />
+        <path id="compile.classpath">
+            <pathelement location="${build.dir}" />
+            <pathelement location="${lib.dir}/commons-logging-${commons-logging.ver}.jar" />
+            <pathelement location="${lib.dir}/jdom.jar" />
+            <pathelement location="${lib.dir}/xercesImpl.jar" />
+            <pathelement location="${lib.dir}/treedistance.jar" />
+            <pathelement location="${lib.dir}/simpack-0.91-bin.jar" />
+            <pathelement location="${lib.dir}/famix.jar" />
+            <pathelement location="${lib.dir}/jgrapht-0.6.0.jar" />
+            <pathelement location="${lib.dir}/combinatoricslib-2.0.jar" />
+            <pathelement location="${lib.dir}/spicyEngine-${spicyEngine.ver}.jar" />
+        </path>
+        <path id="run.classpath">
+            <path refid="compile.classpath" />
+            <pathelement location="${lib.dir}/log4j-${log4j.ver}.jar" />
+            <pathelement location="${lib.dir}/jdom.jar" />
+            <pathelement location="${lib.dir}/xercesImpl.jar" />
+        </path>
+        <path id="test.classpath">
+            <path refid="compile.classpath" />
+            <pathelement location="${test.build.dir}" />
+            <pathelement location="${lib.dir}/junit.jar" />
+            <pathelement location="${lib.dir}/log4j-${log4j.ver}.jar" />
+        </path>
+    </target>
+    <target name="-light-deploy-spicyEngine" depends="init">
+        <ant dir="${spicyEngine.dir}" inheritAll="false" target="light-deploy" />
+    </target>
+    <target name="build" depends="-light-deploy-spicyEngine, compile, compile-test" description="compila ed esegue i test">
+    </target>
+    <target name="run" depends="build">
+        <java classname="it.unibas.spicybenchmark.Main" fork="false">
+            <classpath refid="run.classpath" />
+            <assertions>
+                <enable />
+            </assertions>
+        </java>
+    </target>
+    <target name="dist" depends="-clean-dist-dir, rebuild, -init-version, jar, javadoc" description="crea lo zip distribuibile">
+        <zip zipfile="${dist.dir}/${ant.project.name}-java-${major.version}.${minor.version}-build${build.number}.zip">
+            <!-- lib -->
+            <zipfileset dir="${dist.dir}" prefix="${ant.project.name}-java/lib" includes="*.jar" />
+            <zipfileset dir="${lib.dir}" prefix="${ant.project.name}-java/lib" includes="commons-logging-${commons-logging.ver}.jar" />
+            <zipfileset dir="${lib.dir}" prefix="${ant.project.name}-java/lib" includes="jdom.jar" />
+            <zipfileset dir="${lib.dir}" prefix="${ant.project.name}-java/lib" includes="xercesImpl.jar" />
+            <zipfileset dir="${lib.dir}" prefix="${ant.project.name}-java/lib" includes="spicyEngine-${spicyEngine.ver}.jar" />
+            <zipfileset dir="${lib.dir}" prefix="${ant.project.name}-java/lib" includes="treedistance.jar" />
+            <zipfileset dir="${lib.dir}" prefix="${ant.project.name}-java/lib" includes="simpack-0.91-bin.jar" />
+            <zipfileset dir="${lib.dir}" prefix="${ant.project.name}-java/lib" includes="famix.jar" />
+            <zipfileset dir="${lib.dir}" prefix="${ant.project.name}-java/lib" includes="jgrapht-0.6.0.jar" />
+            <zipfileset dir="${lib.dir}" prefix="${ant.project.name}-java/lib" includes="log4j-${log4j.ver}.jar" />
+            <!-- sorgenti -->
+            <zipfileset dir="${src.dir}" prefix="${ant.project.name}-java/src" />
+            <!-- test -->
+            <zipfileset dir="${test.src.dir}" prefix="${ant.project.name}-java/test" />
+            <!-- javadoc -->
+            <zipfileset dir="${javadoc.dir}" prefix="${ant.project.name}-java/javadoc" />
+            <!-- varie -->
+            <zipfileset dir="${misc.dir}" prefix="${ant.project.name}-java/misc" />
+            <!-- build -->
+            <zipfileset dir="." prefix="${ant.project.name}-java" includes="*.*" />
+        </zip>
+    </target>
+
+</project>
