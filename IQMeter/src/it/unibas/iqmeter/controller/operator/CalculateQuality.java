@@ -75,12 +75,12 @@ public class CalculateQuality {
             Date beforeLoadingExpected = new Date();
             logger.debug("\n" + dataSource);
             INode expectedInstanceNode = xmlLoader.loadInstance(dataSource, configuration.getExpectedInstancePath());
-            logger.debug("Expected instance:\n" + expectedInstanceNode);
+            logger.debug("Expected instance:\n"+expectedInstanceNode);
             Date afterLoadingExpected = new Date();
             long loadingExpected = afterLoadingExpected.getTime() - beforeLoadingExpected.getTime();
             executionTimes.append("Expected Instance loaded: ").append(loadingExpected).append(" ms\n");
             INode translatedInstanceNode = xmlLoader.loadInstance(dataSource, skipSetNode, configuration.getTranslatedInstancePath());
-            logger.debug("translated Instance:\n" + translatedInstanceNode);
+            logger.debug("translated Instance:\n"+translatedInstanceNode);
             Date afterLoadingTranslated = new Date();
             long loadingTranslated = afterLoadingTranslated.getTime() - afterLoadingExpected.getTime();
             executionTimes.append("Translated Instance loaded: ").append(loadingTranslated).append(" ms\n");
@@ -110,7 +110,7 @@ public class CalculateQuality {
                 long shashaExecTime = stopShasha.getTime() - startShasha.getTime();
                 executionTimes.append("Shasha execution time: ").append(shashaExecTime).append(" ms\n");
             }
-            logger.debug("Simularity result F-Measure: " + similarityResult.getFmeasure());
+            logger.debug("Simularity result F-Measure: "+ similarityResult.getFmeasure());
             MappingExecution mapping = new MappingExecution();
             SolutionQuality quality = new SolutionQuality();
             quality.setFmeasure(round(similarityResult.getFmeasure()));
@@ -128,13 +128,11 @@ public class CalculateQuality {
             // recorded operations
             Component panel = (Component) modello.getBean(Constant.TAB_SELECTED);
             String panelName = panel.getName();
+            String process = ThreadRecording.getProcessFromPanel(panelName);
             ThreadRecording recording = ThreadRecording.getInstance();
-            if (recording != null) {
-                String process = recording.getProcessFromPanel(panelName);
-                mapping.setEffortRecording(new EffortRecording(recording.getClickCounter(process), recording.getKeyboardCounter(process)));
-            }
-            // modello.putBean(EffortRecording.class.getName() + panelName, new EffortRecording(recording.getClickCounter(process), recording.getKeyboardCounter(process)));
-            // logger.debug("Put key: " + EffortRecording.class.getName() + panelName);
+            mapping.setEffortRecording(new EffortRecording(recording.getClickCounter(process), recording.getKeyboardCounter(process)));
+           // modello.putBean(EffortRecording.class.getName() + panelName, new EffortRecording(recording.getClickCounter(process), recording.getKeyboardCounter(process)));
+           // logger.debug("Put key: " + EffortRecording.class.getName() + panelName);
 
             Utility.printFinalLog(similarityResult, configuration, executionTimes.toString());
 

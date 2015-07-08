@@ -234,9 +234,6 @@ public class PanelToolMapping extends PannelloPing {
         DefaultMutableTreeNode root = (DefaultMutableTreeNode) model.getRoot();
         root.removeAllChildren();
         MappingTool tool = (MappingTool) Applicazione.getInstance().getModello().getBean(MappingTool.class.getName() + "_" + this.getName());
-        if (tool == null) {
-            throw new IllegalStateException("Unable to load tool " + MappingTool.class.getName() + "_" + this.getName());
-        }
         for (int i = 0; i < tool.getNumberExecutions(); i++) {
             MappingExecution execution = tool.getMappingTask(i);
             logger.trace("Add execution: " + execution.getNumberLabel());
@@ -250,7 +247,7 @@ public class PanelToolMapping extends PannelloPing {
         JMenuItem itemDelete = new JMenuItem();
         itemDelete
                 .setAction(Applicazione.getInstance().getControllo().getAzioneSwing(ActionDeleteExecution.class
-                                .getName()));
+                .getName()));
         itemDelete.setIcon(Utils.createIcon(Constant.ICON_DELETE));
 
         JMenuItem itemGraph = new JMenuItem();
@@ -290,6 +287,7 @@ public class PanelToolMapping extends PannelloPing {
         itemOpenFolder.setIcon(Utils.createIcon(Constant.ICON_OPEN_FOLDER_SMALL));
         itemOpenFolder.setText(
                 "Open Output Folder");
+
 
         popup.add(itemDelete);
         popup.add(itemGraph);
@@ -363,23 +361,23 @@ public class PanelToolMapping extends PannelloPing {
         public void mouseExited(MouseEvent e) {
         }
     }
-
-    private class KeyboardKeyListenerTree implements KeyListener {
+    
+    private class KeyboardKeyListenerTree implements KeyListener{
 
         public void keyTyped(KeyEvent e) {
 
         }
 
         public void keyPressed(KeyEvent e) {
-
+           
         }
 
         public void keyReleased(KeyEvent e) {
             logger.debug("Key Released: " + e.getKeyCode());
-            if (e.getKeyCode() == KeyEvent.VK_DELETE && Applicazione.getInstance().getModello().getBean(Constant.EXECUTION_SELECTED) != null) {
-                Applicazione.getInstance().getControllo().eseguiAzione(ActionDeleteExecution.class.getName(), e);
-            }
+           if(e.getKeyCode() == KeyEvent.VK_DELETE && Applicazione.getInstance().getModello().getBean(Constant.EXECUTION_SELECTED) != null){
+               Applicazione.getInstance().getControllo().eseguiAzione(ActionDeleteExecution.class.getName(), e);
+           }
         }
-
+    
     }
 }

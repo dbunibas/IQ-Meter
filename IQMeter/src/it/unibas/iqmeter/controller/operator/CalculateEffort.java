@@ -50,12 +50,9 @@ public class CalculateEffort {
     }
 
     public static void calculateClick(MappingTool tool, MappingExecution task, boolean automatic) {
-        ThreadRecording recording = ThreadRecording.getInstance();
-        if (recording == null) {
-            return;
-        }
         if (automatic) {
-            String process = recording.getProcessFromPanel(tool.getName());
+            String process = ThreadRecording.getProcessFromPanel(tool.getName());
+            ThreadRecording recording = ThreadRecording.getInstance();
             if (recording.isStarted()) {
                 int clickCounter = recording.getClickCounter(process);
                 int keyboardCounter = recording.getKeyboardCounter(process);
