@@ -21,16 +21,18 @@ import org.apache.commons.logging.LogFactory;
 
 public class ThreadRecording extends PingThreadWorker {
 
-    private static Log logger = LogFactory.getLog(ThreadRecording.class);
-    private static ThreadRecording singleton;
+    private static ThreadRecording singleton = new ThreadRecording();
     public int PROCESS_VM_READ = 0x0010;
     public int PROCESS_QUERY_INFORMATION = 0x0400;
-    public User32 USER32 = User32.INSTANCE;
-//    public User32 USER32 = null;
-    public ThreadRecording.Psapi PSAPI = ThreadRecording.Psapi.INSTANCE;
-    private int MAX_TITLE_LEGHT = 1024;
+//    public User32 USER32 = User32.INSTANCE;
+    public User32 USER32 = null;
+//    public ThreadRecording.Psapi PSAPI = ThreadRecording.Psapi.INSTANCE;
+    public ThreadRecording.Psapi PSAPI = null;
+    private static final int MAX_TITLE_LEGHT = 1024;
+    private boolean osCompatible = false;
 
     private boolean record = false;
+    private static Log logger = LogFactory.getLog(ThreadRecording.class);
     private boolean started = false;
     private String processToRecord = null;
 
@@ -40,15 +42,6 @@ public class ThreadRecording extends PingThreadWorker {
     public static final String CLOVER_ETL = "javaw.exe";
     public static final String MAP_FORCE = "MapForce.exe";
 
-    public static ThreadRecording getInstance() {
-        if (singleton != null) {
-            try{
-                singleton = new ThreadRecording();
-            }catch(Exception e){}
-        }
-        return singleton;
-    }
-
     private ThreadRecording() {
         this.clickMap.put(SPICY, 0);
         this.clickMap.put(CLOVER_ETL, 0);
@@ -56,12 +49,23 @@ public class ThreadRecording extends PingThreadWorker {
         this.keyboardInputsMap.put(SPICY, 0);
         this.keyboardInputsMap.put(CLOVER_ETL, 0);
         this.keyboardInputsMap.put(MAP_FORCE, 0);
+        String os = System.getProperty("os.name").toLowerCase();
+        if (os.contains("windows")) {
+            osCompatible = true;
+            USER32 = User32.INSTANCE;
+            PSAPI = ThreadRecording.Psapi.INSTANCE;
+        }
     }
 
     public void resetForTool(String tool) {
         this.clickMap.put(tool, 0);
         this.keyboardInputsMap.put(tool, 0);
     }
+
+    public static ThreadRecording getInstance() {
+        return singleton;
+    }
+
     public int getClickCounter(String tool) {
         return this.clickMap.get(tool);
     }
@@ -95,7 +99,11 @@ public class ThreadRecording extends PingThreadWorker {
         this.processToRecord = process;
     }
 
-    public String getProcessFromPanel(String panelName) {
+    public boolean isOsCompatible() {
+        return osCompatible;
+    }
+    
+    public static String getProcessFromPanel(String panelName) {
         if (panelName.equalsIgnoreCase("spicy")) {
             return SPICY;
         }
@@ -110,9 +118,11 @@ public class ThreadRecording extends PingThreadWorker {
 
     @Override
     public Object avvia() {
-        new GlobalMouseListener().addMouseListener(new MyMouse());
-        new GlobalKeyListener().addKeyListener(new MyKeyboard());
-        while (record) {
+        if (osCompatible) {
+            new GlobalMouseListener().addMouseListener(new MyMouse());
+            new GlobalKeyListener().addKeyListener(new MyKeyboard());
+            while (record) {
+            }
         }
         return null;
     }

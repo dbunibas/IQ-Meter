@@ -9,6 +9,7 @@ import it.unibas.iqmeter.Utils;
 import it.unibas.iqmeter.controller.ActionAddTool;
 import it.unibas.iqmeter.controller.ActionRecord;
 import it.unibas.iqmeter.controller.operator.ThreadMappingComparison;
+import it.unibas.iqmeter.controller.operator.ThreadRecording;
 import it.unibas.iqmeter.model.MappingTool;
 import it.unibas.iqmeter.model.Scenario;
 import it.unibas.iqmeter.persistence.DAOException;
@@ -92,7 +93,7 @@ public class ActionFinishStep4 extends AzionePingAstratta {
             }
             vista.getComponente(Constant.PANEL_CONTAINER_CHART).setVisible(false);
             this.controllo.eseguiAzione(ActionAddTool.class.getName(), null);
-            this.controllo.abilitaAzioneSwing(ActionRecord.class.getName());
+            if (ThreadRecording.getInstance().isOsCompatible()) this.controllo.abilitaAzioneSwing(ActionRecord.class.getName());
         } catch (DAOException ex) {
             vista.finestraErrore("Problem to create Project, because file Schema or file instances Target is not found.\nSorry, recreate Project");
             JLabel l = (JLabel) vista.getComponente(Constant.LABEL_ICON_STATUS);

@@ -165,7 +165,7 @@ public class ActionOpenProject extends AzionePingAstratta {
                 PanelChartClick pChartClick = (PanelChartClick) vista.getSottoVista(PanelChartClick.class.getName());
                 PanelChartTemporal pChartTemp = (PanelChartTemporal) vista.getSottoVista(PanelChartTemporal.class.getName());
                 PanelChartClickTemporal pChartClickTemp = (PanelChartClickTemporal) vista.getSottoVista(PanelChartClickTemporal.class.getName());
-                controllo.abilitaAzioneSwing(ActionRecord.class.getName());
+                if (ThreadRecording.getInstance().isOsCompatible()) controllo.abilitaAzioneSwing(ActionRecord.class.getName());
                 if (!reload) {
                     view.buildTabPane();
                     vista.getComponente(Constant.TAB_PANE).setVisible(true);
@@ -252,10 +252,6 @@ public class ActionOpenProject extends AzionePingAstratta {
 
             @SuppressWarnings("unchecked")
             private void buildPanelTab() {
-                ThreadRecording recording = ThreadRecording.getInstance();
-                if(recording == null){
-                    return;
-                }
                 List<String> listTools = (List<String>) modello.getBean(Constant.TOOLS_LIST);
                 List<String> list = new ArrayList<String>();
                 for (MappingTool tool : scenario.getToolsList()) {
@@ -263,7 +259,7 @@ public class ActionOpenProject extends AzionePingAstratta {
                     list.add(tool.getName());
                     if (!tool.getExecutionsList().isEmpty()) {
                         isTask = true;
-                        String process = recording.getProcessFromPanel(tool.getName());
+                        String process = ThreadRecording.getProcessFromPanel(tool.getName());
                         for (MappingExecution execution : tool.getExecutionsList()) {
                             if (logger.isDebugEnabled()) {
                                 logger.debug("Processing execution: " + execution);
