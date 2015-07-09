@@ -520,6 +520,7 @@ public class View extends FramePing {
         for (MappingTool tool : sc.getToolsList()) {
             this.addTab(tool.getName());
         }
+        this.validate();
     }
 
     public void removeAllTab() {

@@ -140,7 +140,6 @@ public class ActionOpenProject extends AzionePingAstratta {
                     logger.error(e);
                     error = e.getLocalizedMessage();
                 }
-
                 return null;
             }
 
