@@ -22,6 +22,8 @@ package it.unibas.spicybenchmark.model;
 
 import it.unibas.spicy.model.datasource.INode;
 import it.unibas.spicy.model.datasource.nodes.AttributeNode;
+import it.unibas.spicy.model.datasource.nodes.LeafNode;
+import it.unibas.spicybenchmark.SpicyBenchmarkConstants;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -110,6 +112,23 @@ public class TupleNodeBenchmark {
             }
         }
         return attributes;
+    }
+    
+    public String getAttributeValue(String attribute){
+        List<INode> children = this.iNode.getChildren();
+        for (INode child : children) {
+            if (!(child instanceof AttributeNode)) {
+                continue;
+            }
+            String attributeName = child.getLabel();
+            if (!attribute.equals(attributeName)) {
+                continue;
+            }
+            LeafNode leafNode = (LeafNode) child.getChild(0);
+            String value = leafNode.getValue().toString();
+            return value;
+        }
+        throw new IllegalArgumentException("Unable to find attribute in tuple " + this);
     }
 
     public int getNumberOfTotalAttributes(List<String> attributesToExclude) {

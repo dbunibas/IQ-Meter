@@ -16,3 +16,5 @@ IQMeter/build
 nbproject.properties
 spicyBenchmark/build
 spicyBenchmark/nbproject/private
+spicyBenchmark/dist
+lib/disabled

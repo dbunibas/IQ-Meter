@@ -82,7 +82,17 @@ public class EvaluateFeatureWithMultipleHashIndexing implements IEvaluateFeature
         double cellMatching = 0.0;
         for (TupleMatch tupleMatch : tupleMatches) {
             cellMatching += tupleMatch.getNumberOfMatchingAttributes();
-            cellMatching += tupleMatch.getNumberOfNonMatchingAttributes() * precisionForVariable;
+            for (String nonMatchingAttribute : tupleMatch.getNonMatchingAttributes()) {
+                String expectedValue = tupleMatch.getExpected().getAttributeValue(nonMatchingAttribute);
+                String generatedValue = tupleMatch.getGenerated().getAttributeValue(nonMatchingAttribute);
+                if (logger.isDebugEnabled()) logger.debug("**** ExpectedValue: " + expectedValue);
+                if (logger.isDebugEnabled()) logger.debug("**** GeneratedValue: " + generatedValue);
+                if (isVariable(expectedValue) && isVariable(generatedValue)) {
+                    cellMatching += 1.0;
+                } else {
+                    cellMatching += precisionForVariable;
+                }
+            }
         }
         if (logger.isDebugEnabled()) logger.debug("Matching cells: " + cellMatching);
         long end = System.currentTimeMillis();
@@ -142,13 +152,17 @@ public class EvaluateFeatureWithMultipleHashIndexing implements IEvaluateFeature
             }
             LeafNode leafNode = (LeafNode) child.getChild(0);
             String value = leafNode.getValue().toString();
-            if (value.startsWith(SpicyBenchmarkConstants.LLUN_PREFIX) || value.startsWith(SpicyBenchmarkConstants.SKOLEM_PREFIX)) {
+            if (isVariable(value)) {
                 continue;
             } else {
                 attributesWithoutLLUN.add(attributeName);
             }
         }
         return attributesWithoutLLUN;
+    }
+
+    private boolean isVariable(String value) {
+        return (value.startsWith(SpicyBenchmarkConstants.LLUN_PREFIX) || value.startsWith(SpicyBenchmarkConstants.SKOLEM_PREFIX));
     }
 
     private String getTupleId(TupleNodeBenchmark tupleNodeBenchmark, List<String> attributes) {
@@ -304,6 +318,17 @@ class TupleMatch {
 
     public int getNumberOfNonMatchingAttributes() {
         return getNumberOfTotalAttributes() - getNumberOfMatchingAttributes();
+    }
+
+    public List<String> getNonMatchingAttributes() {
+        List<String> result = new ArrayList<String>();
+        for (String attribute : expected.getAttributes()) {
+            if (matchingAttributes.contains(attribute)) {
+                continue;
+            }
+            result.add(attribute);
+        }
+        return result;
     }
 
     @Override

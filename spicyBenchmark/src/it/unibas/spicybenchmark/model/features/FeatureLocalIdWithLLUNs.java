@@ -22,11 +22,8 @@ package it.unibas.spicybenchmark.model.features;
 
 import it.unibas.spicybenchmark.SpicyBenchmarkConstants;
 import it.unibas.spicybenchmark.model.TupleNodeBenchmark;
-import it.unibas.spicybenchmark.model.features.comparators.SingleLocalIdComparator;
 import it.unibas.spicybenchmark.operators.EvaluateFeatureWithMultipleHashIndexing;
 import it.unibas.spicybenchmark.operators.IEvaluateFeature;
-import it.unibas.spicybenchmark.operators.StandardEvaluateFeature;
-import java.util.AbstractList;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
