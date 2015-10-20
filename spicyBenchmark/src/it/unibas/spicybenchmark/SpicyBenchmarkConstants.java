@@ -32,4 +32,5 @@ public class SpicyBenchmarkConstants {
     
     public static final String LLUN_PREFIX = "_L";
     public static final String SKOLEM_PREFIX = "_SK";
+    public static final String NULL_VALUE = "NULL";
 }

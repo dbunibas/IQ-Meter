@@ -79,6 +79,6 @@ public class FeatureLocalIdWithLLUNs extends AbstractFeature {
 
     @Override
     public IEvaluateFeature getFeatureEvaluator() {
-        return new EvaluateFeatureWithMultipleHashIndexing(precisionForVariable,attributesToExclude);
+        return new EvaluateFeatureWithMultipleHashIndexing(precisionForVariable, attributesToExclude);
     }
 }

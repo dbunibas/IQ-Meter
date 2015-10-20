@@ -73,6 +73,7 @@ public class EvaluateFeatureWithMultipleHashIndexing implements IEvaluateFeature
             if (tupleMatch == null) {
                 violations.addMissingElement(expectedTuple);
             } else {
+                if (logger.isInfoEnabled()) logger.info("Match: " + tupleMatch);
                 tupleMatches.add(tupleMatch);
             }
         }
@@ -87,7 +88,7 @@ public class EvaluateFeatureWithMultipleHashIndexing implements IEvaluateFeature
                 String generatedValue = tupleMatch.getGenerated().getAttributeValue(nonMatchingAttribute);
                 if (logger.isDebugEnabled()) logger.debug("**** ExpectedValue: " + expectedValue);
                 if (logger.isDebugEnabled()) logger.debug("**** GeneratedValue: " + generatedValue);
-                if (isVariable(expectedValue) && isVariable(generatedValue)) {
+                if (matched(expectedValue, generatedValue)) {
                     cellMatching += 1.0;
                 } else {
                     cellMatching += precisionForVariable;
@@ -101,9 +102,9 @@ public class EvaluateFeatureWithMultipleHashIndexing implements IEvaluateFeature
     }
 
     private TupleMatch findMatch(TupleNodeBenchmark expectedTuple, List<AttributeIndex> indexesForTranslated) {
-        String tableName = expectedTuple.getINode().getLabel();
+        String tableName = expectedTuple.getINode().getLabel().toUpperCase();
         for (AttributeIndex attributeIndex : indexesForTranslated) {
-            if (!attributeIndex.getTableName().equals(tableName)) {
+            if (!attributeIndex.getTableName().equalsIgnoreCase(tableName)) {
                 continue;
             }
             String tupleId = getTupleId(expectedTuple, attributeIndex.getAttributes());
@@ -131,7 +132,7 @@ public class EvaluateFeatureWithMultipleHashIndexing implements IEvaluateFeature
     private void generateIndex(List<TupleNodeBenchmark> instance, List<AttributeIndex> indexes) {
         for (TupleNodeBenchmark translatedTuple : instance) {
             List<String> attributesWithoutVariables = getAttributesWithoutVariables(translatedTuple);
-            String tableName = translatedTuple.getINode().getLabel();
+            String tableName = translatedTuple.getINode().getLabel().toUpperCase();
             String tupleId = getTupleId(translatedTuple, attributesWithoutVariables);
             AttributeIndex index = getIndexForAttributes(tableName, attributesWithoutVariables, indexes);
             index.addTupleInBucket(tupleId, translatedTuple);
@@ -161,8 +162,28 @@ public class EvaluateFeatureWithMultipleHashIndexing implements IEvaluateFeature
         return attributesWithoutLLUN;
     }
 
+    private boolean matched(String expectedValue, String generatedValue) {
+        if (expectedValue.startsWith(SpicyBenchmarkConstants.LLUN_PREFIX) && generatedValue.startsWith(SpicyBenchmarkConstants.LLUN_PREFIX)) {
+            return true;
+        }
+        if (expectedValue.startsWith(SpicyBenchmarkConstants.SKOLEM_PREFIX) && generatedValue.startsWith(SpicyBenchmarkConstants.SKOLEM_PREFIX)) {
+            return true;
+        }
+        if (SpicyBenchmarkConstants.NULL_VALUE.equalsIgnoreCase(expectedValue) && generatedValue.startsWith(SpicyBenchmarkConstants.SKOLEM_PREFIX)) {
+            return true;
+        }
+        if (expectedValue.startsWith(SpicyBenchmarkConstants.SKOLEM_PREFIX) && SpicyBenchmarkConstants.NULL_VALUE.equalsIgnoreCase(generatedValue)) {
+            return true;
+        }
+        if (SpicyBenchmarkConstants.NULL_VALUE.equalsIgnoreCase(expectedValue) && SpicyBenchmarkConstants.NULL_VALUE.equalsIgnoreCase(generatedValue)) {
+            return true;
+        }
+        return false;
+    }
+
     private boolean isVariable(String value) {
-        return (value.startsWith(SpicyBenchmarkConstants.LLUN_PREFIX) || value.startsWith(SpicyBenchmarkConstants.SKOLEM_PREFIX));
+        return (value.startsWith(SpicyBenchmarkConstants.LLUN_PREFIX) || value.startsWith(SpicyBenchmarkConstants.SKOLEM_PREFIX))
+                || SpicyBenchmarkConstants.NULL_VALUE.equalsIgnoreCase(value);
     }
 
     private String getTupleId(TupleNodeBenchmark tupleNodeBenchmark, List<String> attributes) {
@@ -187,12 +208,12 @@ public class EvaluateFeatureWithMultipleHashIndexing implements IEvaluateFeature
         if (sb.length() > 0) {
             sb.deleteCharAt(sb.length() - 1);
         }
-        return sb.toString();
+        return sb.toString().toUpperCase();
     }
 
     private AttributeIndex getIndexForAttributes(String tableName, List<String> attributesWithoutLLUN, List<AttributeIndex> indexes) {
         for (AttributeIndex attributeIndex : indexes) {
-            if (attributeIndex.getTableName().equals(tableName) && attributeIndex.getAttributes().equals(attributesWithoutLLUN)) {
+            if (attributeIndex.getTableName().equalsIgnoreCase(tableName) && attributeIndex.getAttributes().equals(attributesWithoutLLUN)) {
                 return attributeIndex;
             }
         }
@@ -206,6 +227,8 @@ public class EvaluateFeatureWithMultipleHashIndexing implements IEvaluateFeature
         for (TupleNodeBenchmark tuple : instance) {
             translatedSize += tuple.getNumberOfTotalAttributes(attributesToExclude);
         }
+        if (logger.isInfoEnabled()) logger.info("Number of matches: " + numberOfMatches);
+        if (logger.isInfoEnabled()) logger.info("Translated size: " + translatedSize);
         return numberOfMatches / (double) translatedSize;
     }
 
@@ -224,6 +247,7 @@ public class EvaluateFeatureWithMultipleHashIndexing implements IEvaluateFeature
             return (2 * precision * recall) / (precision + recall);
         }
     }
+
 }
 
 class AttributeIndex implements Comparable<AttributeIndex> {
@@ -233,7 +257,7 @@ class AttributeIndex implements Comparable<AttributeIndex> {
     private Map<String, List<TupleNodeBenchmark>> index = new HashMap<String, List<TupleNodeBenchmark>>();
 
     public AttributeIndex(String tableName, List<String> attributes) {
-        this.tableName = tableName;
+        this.tableName = tableName.toUpperCase();
         this.attributes = attributes;
     }
 

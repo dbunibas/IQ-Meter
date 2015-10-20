@@ -2,8 +2,8 @@
 <project name="spicy-template">
     
     <!-- ***************************************************
-            Properties
-      *************************************************** -->
+          Properties
+    *************************************************** -->
 
     <property file="./dependent.properties" />
     
@@ -67,16 +67,16 @@
     </target>    
     
     <!-- ***************************************************
-             Clean
-      *************************************************** -->
+           Clean
+    *************************************************** -->
     <target name="clean" depends="init" description="ripulisce le cartelle riproducibili">
         <delete dir="${build.dir}" />
         <delete dir="${test.dir}" />
     </target>
     
     <!-- ***************************************************
-             Prep
-      *************************************************** -->    
+           Prep
+    *************************************************** -->    
     <target name="-create-misc-dir" depends="init">
         <mkdir dir="${misc.dir}" />
     </target>
@@ -124,8 +124,8 @@
     </target>
     
     <!-- ***************************************************
-                      Compilazione 
-      *************************************************** -->
+                    Compilazione 
+    *************************************************** -->
     <target name="compile" depends="prepare, -prepare-resources, -prepare-conf" description="compile src">
         <javac srcdir="${src.dir}"
                destdir="${build.dir}"
@@ -133,7 +133,7 @@
                debug="${build.debug}"
                debuglevel="${build.debuglevel}"
                optimize="${build.optimize}">
-               <compilerarg value="-Xlint:unchecked" />
+            <compilerarg value="-Xlint:unchecked" />
         </javac>
     </target>
     
@@ -147,15 +147,15 @@
     </target>
     
     <!-- ***************************************************
-                Tests
-      *************************************************** -->
+              Tests
+    *************************************************** -->
     <target name="test" depends="-prepare-test, build" description="run tests">
         <junit haltonfailure="false"
                errorProperty="test.failed"
                failureProperty="test.failed"
                fork="true"
-			   showoutput="true"
-			   maxmemory="${junit.maxmemory}">
+               showoutput="true"
+               maxmemory="${junit.maxmemory}">
             <assertions>
                 <enable/>
             </assertions>
@@ -186,8 +186,8 @@
     </target>
     
     <!-- ***************************************************
-                Build
-      *************************************************** -->
+              Build
+    *************************************************** -->
 
     <target name="build" depends="compile, compile-test" description="run tests">
     </target>
@@ -197,8 +197,8 @@
     
     
     <!-- ***************************************************
-                Distribution
-      *************************************************** -->
+              Distribution
+    *************************************************** -->
     <target name="-clean-dist-dir" depends="init">        
         <delete dir="${dist.dir}" />     
     </target>
@@ -248,7 +248,7 @@
                 <include name="${ant.project.name}-*.jar" />
             </fileset>
         </copy>
-    </target>
+    </target>    
 
     <!-- deploy -->
 
@@ -303,8 +303,8 @@
     </target>
     
     <!-- ***************************************************
-               Target particolari
-      *************************************************** -->
+             Target particolari
+    *************************************************** -->
 
     <target name="all" depends="deploy">
     </target>
@@ -317,8 +317,8 @@
     </target>
     
     <!-- ***************************************************
-             FreeForm Project Targets
-      *************************************************** -->
+           FreeForm Project Targets
+    *************************************************** -->
     <target name="gfp" depends="generate-freeform-properties"/>
 
     <target name="generate-freeform-properties" depends="init, prepare">
