@@ -33,8 +33,13 @@
             <pathelement location="${lib.dir}/log4j-${log4j.ver}.jar" />
         </path>
     </target>
-    <target name="-light-deploy-spicyEngine" depends="init">
+    <target name="-light-deploy-spicyEngine" depends="-init-spicyEngine-dir, init"  if="spicyEngine.src.exists">
         <ant dir="${spicyEngine.dir}" inheritAll="false" target="light-deploy" />
+    </target>
+    <target name="-init-spicyEngine-dir">
+        <condition property="spicyEngine.src.exists">
+            <available file="${spicyEngine.dir}" type="dir"/>
+        </condition>
     </target>
     <target name="build" depends="-light-deploy-spicyEngine, compile, compile-test" description="compila ed esegue i test">
     </target>
