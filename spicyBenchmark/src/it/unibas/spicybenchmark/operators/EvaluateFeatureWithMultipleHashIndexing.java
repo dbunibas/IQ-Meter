@@ -38,6 +38,7 @@ public class EvaluateFeatureWithMultipleHashIndexing implements IEvaluateFeature
         Date beginTime = new Date();
         List<TupleNodeBenchmark> translatedInstance = feature.getTranslatedObjects();
         List<TupleNodeBenchmark> expectedInstance = feature.getExpectedObjects();
+        if (logger.isInfoEnabled()) logger.info("Transl size : " + translatedInstance.size() + " - Exp size: " + expectedInstance.size());
         List<AttributeIndex> indexesForTranslated = generateIndex(translatedInstance);
         double numberOfMatches = findMatches(expectedInstance, violations, indexesForTranslated);
         double precision = getPrecision(translatedInstance, numberOfMatches);
@@ -73,11 +74,12 @@ public class EvaluateFeatureWithMultipleHashIndexing implements IEvaluateFeature
             if (tupleMatch == null) {
                 violations.addMissingElement(expectedTuple);
             } else {
-                if (logger.isInfoEnabled()) logger.info("Match: " + tupleMatch);
+                if (logger.isDebugEnabled()) logger.debug("Match: " + tupleMatch);
                 tupleMatches.add(tupleMatch);
             }
         }
         addExtraTuples(indexesForTranslated, violations);
+        if (logger.isInfoEnabled()) logger.info("Matches tuples: " + tupleMatches.size());
         if (logger.isDebugEnabled()) logger.debug("Matches:\n" + SpicyEngineUtility.printCollection(tupleMatches));
         if (logger.isDebugEnabled()) logger.debug("Violations:\n" + violations.printViolations());
         double cellMatching = 0.0;
@@ -91,7 +93,15 @@ public class EvaluateFeatureWithMultipleHashIndexing implements IEvaluateFeature
                 if (matched(expectedValue, generatedValue)) {
                     cellMatching += 1.0;
                 } else {
-                    cellMatching += precisionForVariable;
+                    if (logger.isDebugEnabled()) logger.debug("Exp: " + tupleMatch.getExpected().toStringOnlyLocalId().trim());
+                    if (logger.isDebugEnabled()) logger.debug("Gen: " + tupleMatch.getGenerated().toStringOnlyLocalId().trim());
+                    if (logger.isDebugEnabled()) logger.debug("ExpVal: " + expectedValue + " - GenVal: " + generatedValue);
+                    if (SpicyBenchmarkConstants.NULL_VALUE.equalsIgnoreCase(generatedValue)
+                            || (generatedValue.startsWith(SpicyBenchmarkConstants.LLUN_PREFIX)
+                            && !expectedValue.equalsIgnoreCase(SpicyBenchmarkConstants.NULL_VALUE))) {
+                        if (logger.isDebugEnabled()) logger.debug("Add " + precisionForVariable);
+                        cellMatching += precisionForVariable;
+                    }
                 }
             }
         }
@@ -348,6 +358,9 @@ class TupleMatch {
         List<String> result = new ArrayList<String>();
         for (String attribute : expected.getAttributes()) {
             if (matchingAttributes.contains(attribute)) {
+                continue;
+            }
+            if (attributesToExclude.contains(attribute)) {
                 continue;
             }
             result.add(attribute);
