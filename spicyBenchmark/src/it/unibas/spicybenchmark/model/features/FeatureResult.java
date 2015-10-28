@@ -30,9 +30,9 @@ public class FeatureResult {
     private Violations violations;
 
     public FeatureResult(IFeature feature, double precision, double recall, double fmeasure, long evalualtionTime, Violations violations) {
-        assert (precision < 1.0) : "Precision cannot be higher than 1.0: " + precision;
-        assert (recall < 1.0): "Recall cannot be higher than 1.0: " + recall;
-        assert (fmeasure < 1.0): "FMeasure cannot be higher than 1.0: " + fmeasure;
+        assert (precision <= 1.0) : "Precision cannot be higher than 1.0: " + precision;
+        assert (recall <= 1.0): "Recall cannot be higher than 1.0: " + recall;
+        assert (fmeasure <= 1.0): "FMeasure cannot be higher than 1.0: " + fmeasure;
         this.feature = feature;
         this.precision = precision;
         this.recall = recall;
